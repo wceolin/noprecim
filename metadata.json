@@ -1,0 +1,6 @@
+{
+  "name": "Ofertas da Hora",
+  "description": "Hub de divulgação de links de afiliados, cupons e ofertas com painel administrativo.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
