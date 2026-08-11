@@ -110,6 +110,24 @@ BEGIN
   RETURN EXISTS (SELECT 1 FROM public.user_roles WHERE user_id = _user_id AND role = _role);
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
+
+-- 5. Bucket de Armazenamento para Imagens (anuncios)
+INSERT INTO storage.buckets (id, name, public) 
+VALUES ('anuncios', 'anuncios', true)
+ON CONFLICT (id) DO NOTHING;
+
+-- Políticas para o Bucket de Armazenamento 'anuncios'
+DROP POLICY IF EXISTS "Leitura publica do bucket anuncios" ON storage.objects;
+CREATE POLICY "Leitura publica do bucket anuncios" ON storage.objects FOR SELECT USING (bucket_id = 'anuncios');
+
+DROP POLICY IF EXISTS "Upload no bucket anuncios" ON storage.objects;
+CREATE POLICY "Upload no bucket anuncios" ON storage.objects FOR INSERT WITH CHECK (bucket_id = 'anuncios');
+
+DROP POLICY IF EXISTS "Atualizacao no bucket anuncios" ON storage.objects;
+CREATE POLICY "Atualizacao no bucket anuncios" ON storage.objects FOR UPDATE USING (bucket_id = 'anuncios');
+
+DROP POLICY IF EXISTS "Delecao no bucket anuncios" ON storage.objects;
+CREATE POLICY "Delecao no bucket anuncios" ON storage.objects FOR DELETE USING (bucket_id = 'anuncios');
 `;
 
 export const SupabaseConfigModal: React.FC<SupabaseConfigModalProps> = ({
