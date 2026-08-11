@@ -25,9 +25,7 @@ export const FeaturedDealsCarousel: React.FC<FeaturedDealsCarouselProps> = ({
             Anúncios em Destaque
           </h2>
         </div>
-        <span className="text-xs font-semibold text-amber-600 dark:text-amber-400">
-          Super Ofertas Selecionadas
-        </span>
+        {/* Removed Super Ofertas Selecionadas span */}
       </div>
 
       {/* Horizontal Carousel Roll with exact same AnuncioCard styling */}

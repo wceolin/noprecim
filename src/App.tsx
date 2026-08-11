@@ -31,7 +31,8 @@ export default function App() {
     setCurrentPath(path);
   };
 
-  const isAdminView = currentPath.startsWith('/admin');
+  const cleanPath = currentPath.toLowerCase().trim();
+  const isAdminView = cleanPath.startsWith('/admin') || cleanPath.startsWith('/admim');
 
   return (
     <QueryClientProvider client={queryClient}>

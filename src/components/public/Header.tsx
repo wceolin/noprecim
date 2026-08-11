@@ -136,17 +136,19 @@ export const Header: React.FC<HeaderProps> = ({
               )}
             </button>
 
-            {/* 4. Lock Icon Button (ONLY SHOWN IF USER IS ADMIN) */}
-            {isAdmin && (
-              <button
-                onClick={onNavigateAdmin}
-                title="Painel do Administrador"
-                aria-label="Painel de Administração"
-                className="p-2.5 rounded-2xl bg-gradient-to-tr from-orange-600 to-rose-600 text-white shadow-md shadow-orange-500/20 hover:scale-105 active:scale-95 transition-all cursor-pointer"
-              >
-                <Lock className="w-4 h-4" />
-              </button>
-            )}
+            {/* 4. Admin Lock Icon Button */}
+            <button
+              onClick={onNavigateAdmin}
+              title={isAdmin ? "Painel do Administrador" : "Acessar Painel Admin"}
+              aria-label="Acessar Painel Admin"
+              className={`p-2.5 rounded-2xl transition-all cursor-pointer ${
+                isAdmin
+                  ? 'bg-gradient-to-tr from-orange-600 to-rose-600 text-white shadow-md shadow-orange-500/20 hover:scale-105 active:scale-95'
+                  : 'border border-orange-100 dark:border-zinc-800 text-zinc-500 dark:text-zinc-400 hover:bg-orange-50 dark:hover:bg-zinc-800 hover:text-orange-600'
+              }`}
+            >
+              <Lock className="w-4 h-4" />
+            </button>
 
           </div>
 

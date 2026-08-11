@@ -77,12 +77,9 @@ export const SponsorCarousel: React.FC<SponsorCarouselProps> = ({ sponsors, cupo
         <div className="flex items-center gap-2">
           <Award className="w-5 h-5 text-orange-600 dark:text-orange-400" />
           <h2 className="text-sm font-bold uppercase tracking-wider text-zinc-900 dark:text-zinc-100">
-            Lojas e Patrocinadores Destaque
+            PARCEIROS
           </h2>
         </div>
-        <span className="text-xs font-bold text-orange-600 dark:text-orange-400">
-          Parceiros Oficiais
-        </span>
       </div>
 
       {/* Horizontal Scrollable Carousel Roll */}

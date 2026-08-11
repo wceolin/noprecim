@@ -467,25 +467,26 @@ export async function uploadAnuncioImage(file: File): Promise<string> {
 }
 
 // ----------------------------------------------------------------------
+// ----------------------------------------------------------------------
 // CRUD MUTATIONS (ANUNCIOS, PATROCINADORES, CUPONS)
 // ----------------------------------------------------------------------
 
 export async function createAnuncio(data: Omit<Anuncio, 'id' | 'cliques' | 'created_at' | 'updated_at'>): Promise<Anuncio> {
   const client = getSupabase();
-  if (client) {
-    try {
-      const payload = {
-        ...data,
-        cliques: 0,
-        updated_at: new Date().toISOString()
-      };
-      const { data: created, error } = await client.from('anuncios').insert([payload]).select().single();
-      if (!error && created) {
-        return created as Anuncio;
-      }
-      console.error('Error creating anuncio in Supabase:', error?.message);
-    } catch (e) {
-      console.error('Create anuncio exception:', e);
+  if (client && isSupabaseConfigured()) {
+    const { patrocinador, ...cleanData } = data as any;
+    const payload = {
+      ...cleanData,
+      cliques: 0,
+      updated_at: new Date().toISOString()
+    };
+    const { data: created, error } = await client.from('anuncios').insert([payload]).select('*, patrocinador:patrocinadores(*)').single();
+    if (error) {
+      console.error('Error creating anuncio in Supabase:', error);
+      throw new Error(`Erro no Supabase: ${error.message}`);
+    }
+    if (created) {
+      return created as Anuncio;
     }
   }
 
@@ -502,18 +503,18 @@ export async function createAnuncio(data: Omit<Anuncio, 'id' | 'cliques' | 'crea
 
 export async function updateAnuncio(id: string, data: Partial<Anuncio>): Promise<boolean> {
   const client = getSupabase();
-  if (client) {
-    try {
-      // Remove joined properties before updating table
-      const { patrocinador, ...cleanPayload } = data;
-      const { error } = await client
-        .from('anuncios')
-        .update({ ...cleanPayload, updated_at: new Date().toISOString() })
-        .eq('id', id);
-      if (!error) return true;
-    } catch (e) {
-      console.error('Update anuncio error:', e);
+  if (client && isSupabaseConfigured()) {
+    // Remove joined properties before updating table
+    const { patrocinador, ...cleanPayload } = data as any;
+    const { error } = await client
+      .from('anuncios')
+      .update({ ...cleanPayload, updated_at: new Date().toISOString() })
+      .eq('id', id);
+    if (error) {
+      console.error('Update anuncio error:', error);
+      throw new Error(`Erro no Supabase: ${error.message}`);
     }
+    return true;
   }
 
   const list = getLocalData<Anuncio>(DEMO_ANUNCIOS_KEY, INITIAL_MOCK_ANUNCIOS);
@@ -524,13 +525,13 @@ export async function updateAnuncio(id: string, data: Partial<Anuncio>): Promise
 
 export async function deleteAnuncio(id: string): Promise<boolean> {
   const client = getSupabase();
-  if (client) {
-    try {
-      const { error } = await client.from('anuncios').delete().eq('id', id);
-      if (!error) return true;
-    } catch (e) {
-      console.error('Delete anuncio error:', e);
+  if (client && isSupabaseConfigured()) {
+    const { error } = await client.from('anuncios').delete().eq('id', id);
+    if (error) {
+      console.error('Delete anuncio error:', error);
+      throw new Error(`Erro no Supabase: ${error.message}`);
     }
+    return true;
   }
 
   const list = getLocalData<Anuncio>(DEMO_ANUNCIOS_KEY, INITIAL_MOCK_ANUNCIOS);
@@ -541,14 +542,14 @@ export async function deleteAnuncio(id: string): Promise<boolean> {
 // Patrocinadores CRUD
 export async function createPatrocinador(data: Omit<Patrocinador, 'id' | 'cliques' | 'created_at' | 'updated_at'>): Promise<Patrocinador> {
   const client = getSupabase();
-  if (client) {
-    try {
-      const payload = { ...data, cliques: 0, updated_at: new Date().toISOString() };
-      const { data: created, error } = await client.from('patrocinadores').insert([payload]).select().single();
-      if (!error && created) return created as Patrocinador;
-    } catch (e) {
-      console.error('Create patrocinador error:', e);
+  if (client && isSupabaseConfigured()) {
+    const payload = { ...data, cliques: 0, updated_at: new Date().toISOString() };
+    const { data: created, error } = await client.from('patrocinadores').insert([payload]).select().single();
+    if (error) {
+      console.error('Create patrocinador error:', error);
+      throw new Error(`Erro no Supabase: ${error.message}`);
     }
+    if (created) return created as Patrocinador;
   }
 
   const list = getLocalData<Patrocinador>(DEMO_PATROCINADORES_KEY, INITIAL_MOCK_PATROCINADORES);
@@ -559,13 +560,13 @@ export async function createPatrocinador(data: Omit<Patrocinador, 'id' | 'clique
 
 export async function updatePatrocinador(id: string, data: Partial<Patrocinador>): Promise<boolean> {
   const client = getSupabase();
-  if (client) {
-    try {
-      const { error } = await client.from('patrocinadores').update({ ...data, updated_at: new Date().toISOString() }).eq('id', id);
-      if (!error) return true;
-    } catch (e) {
-      console.error('Update patrocinador error:', e);
+  if (client && isSupabaseConfigured()) {
+    const { error } = await client.from('patrocinadores').update({ ...data, updated_at: new Date().toISOString() }).eq('id', id);
+    if (error) {
+      console.error('Update patrocinador error:', error);
+      throw new Error(`Erro no Supabase: ${error.message}`);
     }
+    return true;
   }
 
   const list = getLocalData<Patrocinador>(DEMO_PATROCINADORES_KEY, INITIAL_MOCK_PATROCINADORES);
@@ -575,13 +576,13 @@ export async function updatePatrocinador(id: string, data: Partial<Patrocinador>
 
 export async function deletePatrocinador(id: string): Promise<boolean> {
   const client = getSupabase();
-  if (client) {
-    try {
-      const { error } = await client.from('patrocinadores').delete().eq('id', id);
-      if (!error) return true;
-    } catch (e) {
-      console.error('Delete patrocinador error:', e);
+  if (client && isSupabaseConfigured()) {
+    const { error } = await client.from('patrocinadores').delete().eq('id', id);
+    if (error) {
+      console.error('Delete patrocinador error:', error);
+      throw new Error(`Erro no Supabase: ${error.message}`);
     }
+    return true;
   }
 
   const list = getLocalData<Patrocinador>(DEMO_PATROCINADORES_KEY, INITIAL_MOCK_PATROCINADORES);
@@ -592,14 +593,15 @@ export async function deletePatrocinador(id: string): Promise<boolean> {
 // Cupons CRUD
 export async function createCupom(data: Omit<Cupom, 'id' | 'created_at' | 'updated_at'>): Promise<Cupom> {
   const client = getSupabase();
-  if (client) {
-    try {
-      const payload = { ...data, updated_at: new Date().toISOString() };
-      const { data: created, error } = await client.from('cupons').insert([payload]).select().single();
-      if (!error && created) return created as Cupom;
-    } catch (e) {
-      console.error('Create cupom error:', e);
+  if (client && isSupabaseConfigured()) {
+    const { patrocinador, ...clean } = data as any;
+    const payload = { ...clean, updated_at: new Date().toISOString() };
+    const { data: created, error } = await client.from('cupons').insert([payload]).select('*, patrocinador:patrocinadores(*)').single();
+    if (error) {
+      console.error('Create cupom error:', error);
+      throw new Error(`Erro no Supabase: ${error.message}`);
     }
+    if (created) return created as Cupom;
   }
 
   const list = getLocalData<Cupom>(DEMO_CUPONS_KEY, INITIAL_MOCK_CUPONS);
@@ -610,14 +612,14 @@ export async function createCupom(data: Omit<Cupom, 'id' | 'created_at' | 'updat
 
 export async function updateCupom(id: string, data: Partial<Cupom>): Promise<boolean> {
   const client = getSupabase();
-  if (client) {
-    try {
-      const { patrocinador, ...clean } = data;
-      const { error } = await client.from('cupons').update({ ...clean, updated_at: new Date().toISOString() }).eq('id', id);
-      if (!error) return true;
-    } catch (e) {
-      console.error('Update cupom error:', e);
+  if (client && isSupabaseConfigured()) {
+    const { patrocinador, ...clean } = data as any;
+    const { error } = await client.from('cupons').update({ ...clean, updated_at: new Date().toISOString() }).eq('id', id);
+    if (error) {
+      console.error('Update cupom error:', error);
+      throw new Error(`Erro no Supabase: ${error.message}`);
     }
+    return true;
   }
 
   const list = getLocalData<Cupom>(DEMO_CUPONS_KEY, INITIAL_MOCK_CUPONS);
@@ -627,13 +629,13 @@ export async function updateCupom(id: string, data: Partial<Cupom>): Promise<boo
 
 export async function deleteCupom(id: string): Promise<boolean> {
   const client = getSupabase();
-  if (client) {
-    try {
-      const { error } = await client.from('cupons').delete().eq('id', id);
-      if (!error) return true;
-    } catch (e) {
-      console.error('Delete cupom error:', e);
+  if (client && isSupabaseConfigured()) {
+    const { error } = await client.from('cupons').delete().eq('id', id);
+    if (error) {
+      console.error('Delete cupom error:', error);
+      throw new Error(`Erro no Supabase: ${error.message}`);
     }
+    return true;
   }
 
   const list = getLocalData<Cupom>(DEMO_CUPONS_KEY, INITIAL_MOCK_CUPONS);
