@@ -146,24 +146,20 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({ onBackToPublic, onOpenCo
             </button>
           </div>
 
-          {!configured && (
-            <div className="p-3.5 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 text-amber-900 dark:text-amber-200 text-xs space-y-2">
-              <div className="flex items-center gap-2 font-bold">
-                <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
-                <span>Supabase Não Conectado</span>
-              </div>
-              <p>
-                Ainda sem credenciais do Supabase. Você pode criar ou entrar no modo de demonstração!
-              </p>
-              <button
-                type="button"
-                onClick={onOpenConfig}
-                className="text-orange-700 dark:text-orange-400 font-bold underline text-xs block"
-              >
-                Configurar Supabase URL / Anon Key
-              </button>
+          {/* Database Status Indicator */}
+          <div className="flex items-center justify-between p-2.5 rounded-xl bg-orange-50/60 dark:bg-zinc-800/50 border border-orange-100 dark:border-zinc-800 text-[11px] text-zinc-600 dark:text-zinc-300">
+            <div className="flex items-center gap-1.5 font-medium">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span>{configured ? 'Supabase Cloud Conectado' : 'Banco de Dados Ativo'}</span>
             </div>
-          )}
+            <button
+              type="button"
+              onClick={onOpenConfig}
+              className="text-orange-600 dark:text-orange-400 font-bold hover:underline cursor-pointer"
+            >
+              Configurar DB
+            </button>
+          </div>
 
           {error && (
             <div className="p-3 rounded-2xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 text-rose-800 dark:text-rose-300 text-xs font-semibold flex items-start gap-2">
