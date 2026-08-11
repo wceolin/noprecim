@@ -152,7 +152,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPublic }) => {
             <div className="flex items-center gap-2.5">
               <div className="w-9 h-9 rounded-2xl overflow-hidden shadow-md shrink-0 bg-amber-400 flex items-center justify-center p-0.5">
                 <img
-                  src="/src/assets/images/noprecim_mascot_logo_1786476553702.jpg"
+                  src="/src/assets/images/noprecim_exact_mascot_1786477126275.jpg"
                   alt="NOPRECIM"
                   className="w-full h-full object-contain rounded-[12px]"
                   referrerPolicy="no-referrer"

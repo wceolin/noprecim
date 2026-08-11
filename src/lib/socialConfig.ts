@@ -102,6 +102,27 @@ export async function saveSocialConfig(config: Partial<SocialConfig>): Promise<S
   return updated;
 }
 
+export function formatInstagramUrl(handleOrUrl: string): string {
+  if (!handleOrUrl) return 'https://instagram.com';
+  if (handleOrUrl.startsWith('http')) return handleOrUrl;
+  const clean = handleOrUrl.replace(/^@/, '').trim();
+  return `https://instagram.com/${clean}`;
+}
+
+export function formatTelegramUrl(linkOrHandle: string): string {
+  if (!linkOrHandle) return 'https://t.me';
+  if (linkOrHandle.startsWith('http')) return linkOrHandle;
+  const clean = linkOrHandle.replace(/^@/, '').trim();
+  return `https://t.me/${clean}`;
+}
+
+export function formatTikTokUrl(linkOrHandle: string): string {
+  if (!linkOrHandle) return 'https://tiktok.com';
+  if (linkOrHandle.startsWith('http')) return linkOrHandle;
+  const clean = linkOrHandle.replace(/^@/, '').trim();
+  return `https://tiktok.com/@${clean}`;
+}
+
 export function buildWhatsAppLink(customConfig?: SocialConfig): string {
   const cfg = customConfig || getSocialConfig();
   const cleanNumber = cfg.whatsappNumero.replace(/\D/g, '');

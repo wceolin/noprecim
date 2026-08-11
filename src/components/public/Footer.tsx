@@ -15,7 +15,7 @@ export const Footer: React.FC = () => {
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-2xl overflow-hidden shadow-md shadow-amber-500/20 shrink-0 bg-amber-400 flex items-center justify-center p-0.5">
                 <img
-                  src="/src/assets/images/noprecim_mascot_logo_1786476553702.jpg"
+                  src="/src/assets/images/noprecim_exact_mascot_1786477126275.jpg"
                   alt="NOPRECIM Logo"
                   className="w-full h-full object-contain rounded-[14px]"
                   referrerPolicy="no-referrer"
