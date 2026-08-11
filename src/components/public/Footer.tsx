@@ -13,15 +13,20 @@ export const Footer: React.FC = () => {
             
             {/* Brand Logo & Description */}
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-orange-600 via-amber-500 to-rose-500 flex items-center justify-center text-white shadow-md shadow-orange-500/20 shrink-0">
-                <Flame className="w-5 h-5 animate-pulse" />
+              <div className="w-10 h-10 rounded-2xl overflow-hidden shadow-md shadow-amber-500/20 shrink-0 bg-amber-400 flex items-center justify-center p-0.5">
+                <img
+                  src="/src/assets/images/noprecim_mascot_logo_1786476553702.jpg"
+                  alt="NOPRECIM Logo"
+                  className="w-full h-full object-contain rounded-[14px]"
+                  referrerPolicy="no-referrer"
+                />
               </div>
               <div>
                 <span className="text-base font-black bg-gradient-to-r from-orange-600 via-amber-500 to-rose-500 bg-clip-text text-transparent">
-                  Ofertas da Hora
+                  NOPRECIM
                 </span>
                 <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5 leading-relaxed">
-                  O seu portal diário de links de afiliados, cupons de desconto verificados e super promoções.
+                  O seu portal diário de achadinhos, links de afiliados, cupons de desconto e super promoções no precinho.
                 </p>
               </div>
             </div>
@@ -55,7 +60,7 @@ export const Footer: React.FC = () => {
           </div>
 
           <div className="pt-4 flex flex-col sm:flex-row items-center justify-between text-[11px] text-zinc-400 dark:text-zinc-500 gap-2">
-            <p>© {new Date().getFullYear()} Ofertas da Hora. Todos os direitos reservados.</p>
+            <p>© {new Date().getFullYear()} NOPRECIM. Todos os direitos reservados.</p>
             <p>Os preços e cupons podem variar de acordo com as lojas oficiais parceiras.</p>
           </div>
         </div>

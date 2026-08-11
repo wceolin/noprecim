@@ -31,7 +31,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const hasDemoSession = localStorage.getItem(DEMO_ADMIN_KEY) === 'true';
       if (hasDemoSession) {
         if (mounted) {
-          setUser({ id: 'demo-admin-id', email: 'admin@ofertasdahora.com' });
+          setUser({ id: 'demo-admin-id', email: 'admin@noprecim.com' });
           setIsAdmin(true);
           setIsDemoAdmin(true);
           setLoading(false);
@@ -202,7 +202,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const loginAsDemoAdmin = () => {
     localStorage.setItem(DEMO_ADMIN_KEY, 'true');
-    setUser({ id: 'demo-admin-id', email: 'admin@ofertasdahora.com' });
+    setUser({ id: 'demo-admin-id', email: 'admin@noprecim.com' });
     setIsAdmin(true);
     setIsDemoAdmin(true);
   };

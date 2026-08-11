@@ -12,10 +12,10 @@ const SOCIAL_CONFIG_KEY = 'ofertas_social_config';
 
 export const DEFAULT_SOCIAL_CONFIG: SocialConfig = {
   whatsappNumero: '5511999999999',
-  whatsappMensagem: 'Olá! Vim pelo site Ofertas da Hora e gostaria de tirar uma dúvida.',
-  telegramLink: 'https://t.me/ofertasdahora',
-  instagramHandle: '@ofertasdahoraoficial',
-  tiktokLink: 'https://tiktok.com/@ofertasdahora'
+  whatsappMensagem: 'Olá! Vim pelo site NOPRECIM e gostaria de tirar uma dúvida.',
+  telegramLink: 'https://t.me/noprecim',
+  instagramHandle: '@noprecimoficial',
+  tiktokLink: 'https://tiktok.com/@noprecim'
 };
 
 /**

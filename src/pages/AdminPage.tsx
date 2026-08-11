@@ -150,12 +150,17 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPublic }) => {
             </button>
 
             <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-2xl bg-gradient-to-tr from-orange-600 to-rose-600 flex items-center justify-center text-white shadow-md">
-                <Shield className="w-5 h-5" />
+              <div className="w-9 h-9 rounded-2xl overflow-hidden shadow-md shrink-0 bg-amber-400 flex items-center justify-center p-0.5">
+                <img
+                  src="/src/assets/images/noprecim_mascot_logo_1786476553702.jpg"
+                  alt="NOPRECIM"
+                  className="w-full h-full object-contain rounded-[12px]"
+                  referrerPolicy="no-referrer"
+                />
               </div>
               <div>
                 <h1 className="text-base font-black text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
-                  <span>Painel Administrativo</span>
+                  <span>Painel NOPRECIM</span>
                   {isDemoAdmin && (
                     <span className="text-[10px] font-bold bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-200 px-2 py-0.5 rounded-full">
                       Demo Mode
@@ -163,7 +168,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPublic }) => {
                   )}
                 </h1>
                 <p className="text-[10px] text-zinc-400 truncate max-w-xs">
-                  {user.email || 'admin@ofertasdahora.com'}
+                  {user.email || 'admin@noprecim.com'}
                 </p>
               </div>
             </div>

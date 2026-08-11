@@ -94,12 +94,17 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({ onBackToPublic, onOpenCo
         <Card className="p-7 border border-orange-200 dark:border-zinc-800 shadow-2xl space-y-5">
           
           <div className="text-center space-y-2">
-            <div className="w-14 h-14 mx-auto rounded-3xl bg-gradient-to-tr from-orange-600 via-amber-500 to-rose-500 flex items-center justify-center text-white shadow-lg shadow-orange-500/30">
-              <Shield className="w-8 h-8" />
+            <div className="w-16 h-16 mx-auto rounded-3xl overflow-hidden shadow-lg shadow-amber-500/30 bg-amber-400 flex items-center justify-center p-1">
+              <img
+                src="/src/assets/images/noprecim_mascot_logo_1786476553702.jpg"
+                alt="NOPRECIM Logo"
+                className="w-full h-full object-contain rounded-[20px]"
+                referrerPolicy="no-referrer"
+              />
             </div>
             <div>
               <h2 className="text-2xl font-black bg-gradient-to-r from-orange-600 via-amber-500 to-rose-500 bg-clip-text text-transparent">
-                Painel Administrativo
+                Painel NOPRECIM
               </h2>
               <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
                 {mode === 'login'

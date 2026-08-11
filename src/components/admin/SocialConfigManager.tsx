@@ -102,7 +102,7 @@ export const SocialConfigManager: React.FC = () => {
 
           <Input
             label="Link do Canal / Grupo no Telegram"
-            placeholder="https://t.me/ofertasdahora"
+            placeholder="https://t.me/noprecim"
             value={config.telegramLink}
             onChange={(e) => setConfig({ ...config, telegramLink: e.target.value })}
           />
@@ -117,7 +117,7 @@ export const SocialConfigManager: React.FC = () => {
 
           <Input
             label="Link ou Handle do Instagram"
-            placeholder="https://instagram.com/ofertasdahoraoficial ou @ofertasdahoraoficial"
+            placeholder="https://instagram.com/noprecimoficial ou @noprecimoficial"
             value={config.instagramHandle}
             onChange={(e) => setConfig({ ...config, instagramHandle: e.target.value })}
           />
@@ -132,7 +132,7 @@ export const SocialConfigManager: React.FC = () => {
 
           <Input
             label="Link do Perfil do TikTok"
-            placeholder="https://tiktok.com/@ofertasdahora"
+            placeholder="https://tiktok.com/@noprecim"
             value={config.tiktokLink}
             onChange={(e) => setConfig({ ...config, tiktokLink: e.target.value })}
           />

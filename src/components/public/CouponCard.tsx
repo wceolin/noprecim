@@ -70,7 +70,7 @@ export const CouponCard: React.FC<CouponCardProps> = ({ cupom }) => {
               </div>
             )}
             <span className="text-xs font-bold text-zinc-800 dark:text-zinc-200 truncate">
-              {cupom.patrocinador?.nome || 'Ofertas da Hora'}
+              {cupom.patrocinador?.nome || 'NOPRECIM'}
             </span>
           </div>
 

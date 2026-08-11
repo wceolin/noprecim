@@ -43,8 +43,8 @@ export const Header: React.FC<HeaderProps> = ({
     if (navigator.share) {
       try {
         await navigator.share({
-          title: 'Ofertas da Hora',
-          text: 'Confira os melhores links e cupons de ofertas!',
+          title: 'NOPRECIM',
+          text: 'Confira os melhores e mais baratos achadinhos, cupons e ofertas no precinho!',
           url: window.location.href
         });
       } catch (err: any) {
@@ -64,16 +64,21 @@ export const Header: React.FC<HeaderProps> = ({
           
           {/* Brand Name & Logo */}
           <div className="flex items-center gap-2.5">
-            <a href="/" className="flex items-center gap-2 group">
-              <div className="w-9 h-9 rounded-2xl bg-gradient-to-tr from-orange-600 via-amber-500 to-rose-500 flex items-center justify-center text-white shadow-md shadow-orange-500/25 group-hover:scale-105 transition-transform">
-                <Flame className="w-5 h-5 animate-pulse" />
+            <a href="/" className="flex items-center gap-2.5 group">
+              <div className="w-10 h-10 rounded-2xl overflow-hidden shadow-md shadow-amber-500/20 group-hover:scale-105 transition-transform bg-amber-400 flex items-center justify-center p-0.5">
+                <img
+                  src="/src/assets/images/noprecim_mascot_logo_1786476553702.jpg"
+                  alt="NOPRECIM Logo"
+                  className="w-full h-full object-contain rounded-[14px]"
+                  referrerPolicy="no-referrer"
+                />
               </div>
               <div>
                 <h1 className="text-xl sm:text-2xl font-black tracking-tight bg-gradient-to-r from-orange-600 via-amber-500 to-rose-500 bg-clip-text text-transparent">
-                  Ofertas da Hora
+                  NOPRECIM
                 </h1>
                 <p className="text-[9px] font-bold text-zinc-400 uppercase tracking-wider -mt-0.5 hidden sm:block">
-                  Links & Cupons Verificados
+                  Ofertas, Promoções & Cupons
                 </p>
               </div>
             </a>

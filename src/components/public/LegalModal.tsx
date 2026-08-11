@@ -24,11 +24,11 @@ export const LegalModal: React.FC<LegalModalProps> = ({ type, onClose }) => {
           <>
             <div className="flex items-center gap-2 p-3 rounded-xl bg-orange-50 dark:bg-zinc-800 text-orange-900 dark:text-orange-300 font-bold">
               <ShieldCheck className="w-4 h-4 text-orange-600 shrink-0" />
-              <span>Sua privacidade é prioridade no Ofertas da Hora</span>
+              <span>Sua privacidade é prioridade no NOPRECIM</span>
             </div>
 
             <p>
-              O site <strong>Ofertas da Hora</strong> é um portal de divulgação independente de ofertas, promoções, cupons de desconto e links de afiliados de lojas parceiras.
+              O site <strong>NOPRECIM</strong> é um portal de divulgação independente de ofertas, promoções, cupons de desconto e links de afiliados de lojas parceiras.
             </p>
 
             <h4 className="font-bold text-zinc-900 dark:text-zinc-100 text-sm pt-2">1. Coleta de Dados</h4>
@@ -54,7 +54,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({ type, onClose }) => {
             </div>
 
             <p>
-              Bem-vindo ao <strong>Ofertas da Hora</strong>. Ao acessar este site, você concorda com os seguintes termos:
+              Bem-vindo ao <strong>NOPRECIM</strong>. Ao acessar este site, você concorda com os seguintes termos:
             </p>
 
             <h4 className="font-bold text-zinc-900 dark:text-zinc-100 text-sm pt-2">1. Isenção de Responsabilidade</h4>
