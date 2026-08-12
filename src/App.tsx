@@ -25,18 +25,14 @@ export default function App() {
     };
     window.addEventListener('popstate', handlePopState);
 
-    // Set Favicon dynamically
-    try {
-      let link = document.querySelector<HTMLLinkElement>("link[rel*='icon']");
-      if (!link) {
-        link = document.createElement('link');
-        link.rel = 'icon';
-        document.getElementsByTagName('head')[0].appendChild(link);
-      }
-      link.type = 'image/png';
-      link.href = FAVICON_DATA_URI;
-    } catch (e) {
-      console.error('Error setting favicon:', e);
+    // Register Service Worker for PWA installation
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker
+        .register('/sw.js')
+        .then((reg) => {
+          console.log('PWA Service Worker registrado com sucesso:', reg.scope);
+        })
+        .catch((err) => console.error('Erro ao registrar Service Worker:', err));
     }
 
     return () => window.removeEventListener('popstate', handlePopState);
