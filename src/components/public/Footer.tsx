@@ -15,7 +15,7 @@ export const Footer: React.FC = () => {
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-2xl overflow-hidden shadow-md shadow-amber-500/20 shrink-0 bg-amber-400 flex items-center justify-center p-0.5">
                 <img
-                  src="/src/assets/images/noprecim_exact_mascot_1786477126275.jpg"
+                  src="/noprecim_logo.jpg"
                   alt="NOPRECIM Logo"
                   className="w-full h-full object-contain rounded-[14px]"
                   referrerPolicy="no-referrer"
@@ -26,7 +26,7 @@ export const Footer: React.FC = () => {
                   NOPRECIM
                 </span>
                 <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5 leading-relaxed">
-                  O seu portal diário de achadinhos, links de afiliados, cupons de desconto e super promoções no precinho.
+                  Não vendemos produtos, apenas garimpamos os melhores descontos nas maiores lojas do Brasil. Alguns links podem gerar comissão de afiliado, sem custo extra para você.
                 </p>
               </div>
             </div>

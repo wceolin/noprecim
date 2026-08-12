@@ -3,12 +3,12 @@
   "name": "NOPRECIM - Ofertas, Promoções e Cupons",
   "icons": [
     {
-      "src": "/src/assets/images/noprecim_exact_mascot_1786477126275.jpg",
+      "src": "/noprecim_logo.jpg",
       "type": "image/jpeg",
       "sizes": "192x192"
     },
     {
-      "src": "/src/assets/images/noprecim_exact_mascot_1786477126275.jpg",
+      "src": "/noprecim_logo.jpg",
       "type": "image/jpeg",
       "sizes": "512x512"
     }

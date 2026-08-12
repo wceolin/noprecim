@@ -133,11 +133,11 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="flex items-center justify-between gap-2 sm:gap-4">
           
           {/* Brand Name & Logo (Left) */}
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="flex items-center gap-2 shrink-0 md:w-1/4">
             <a href="/" className="flex items-center gap-2 group">
               <div className="w-9 h-9 xs:w-10 xs:h-10 rounded-2xl overflow-hidden shadow-md shadow-amber-500/20 group-hover:scale-105 transition-transform bg-amber-400 flex items-center justify-center p-0.5">
                 <img
-                  src="/src/assets/images/noprecim_exact_mascot_1786477126275.jpg"
+                  src="/noprecim_logo.jpg"
                   alt="NOPRECIM Logo"
                   className="w-full h-full object-contain rounded-[12px] xs:rounded-[14px]"
                   referrerPolicy="no-referrer"
@@ -154,8 +154,8 @@ export const Header: React.FC<HeaderProps> = ({
             </a>
           </div>
 
-          {/* Desktop Search Input (Middle - Between NOPRECIM and Icons) */}
-          <div className="hidden md:flex flex-1 max-w-md mx-2 lg:mx-6 relative">
+          {/* Desktop Search Input (Middle - Centered in Header) */}
+          <div className="hidden md:flex flex-1 justify-center max-w-md lg:max-w-lg mx-auto relative">
             <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-400" />
             <input
               type="text"
@@ -175,7 +175,7 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
 
           {/* Header Icons Group (Far Right Corner - Social Icons + Gear Settings) */}
-          <div className="flex items-center gap-1.5 xs:gap-2.5 shrink-0 ml-auto">
+          <div className="flex items-center gap-1.5 xs:gap-2.5 shrink-0 justify-end md:w-1/4">
             
             {/* Social Icons (WhatsApp, Instagram, Telegram) */}
             {renderSocialIcons()}

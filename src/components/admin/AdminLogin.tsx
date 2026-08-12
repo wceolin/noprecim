@@ -96,7 +96,7 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({ onBackToPublic, onOpenCo
           <div className="text-center space-y-2">
             <div className="w-16 h-16 mx-auto rounded-3xl overflow-hidden shadow-lg shadow-amber-500/30 bg-amber-400 flex items-center justify-center p-1">
               <img
-                src="/src/assets/images/noprecim_exact_mascot_1786477126275.jpg"
+                src="/noprecim_logo.jpg"
                 alt="NOPRECIM Logo"
                 className="w-full h-full object-contain rounded-[20px]"
                 referrerPolicy="no-referrer"
