@@ -5,6 +5,7 @@ import { AuthProvider } from './context/AuthContext';
 import { ToastProvider } from './context/ToastContext';
 import { PublicPage } from './pages/PublicPage';
 import { AdminPage } from './pages/AdminPage';
+import { FAVICON_DATA_URI } from './assets/faviconDataUri';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -23,6 +24,21 @@ export default function App() {
       setCurrentPath(window.location.pathname);
     };
     window.addEventListener('popstate', handlePopState);
+
+    // Set Favicon dynamically
+    try {
+      let link = document.querySelector<HTMLLinkElement>("link[rel*='icon']");
+      if (!link) {
+        link = document.createElement('link');
+        link.rel = 'icon';
+        document.getElementsByTagName('head')[0].appendChild(link);
+      }
+      link.type = 'image/png';
+      link.href = FAVICON_DATA_URI;
+    } catch (e) {
+      console.error('Error setting favicon:', e);
+    }
+
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
