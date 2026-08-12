@@ -117,7 +117,21 @@ const DEMO_CUPONS_KEY = 'ofertas_demo_cupons';
 function getLocalData<T>(key: string, defaultData: T[]): T[] {
   try {
     const raw = localStorage.getItem(key);
-    if (raw) return JSON.parse(raw);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) {
+        // Filter out legacy mock items (like pat-1, anu-1, cup-1, etc.)
+        const cleaned = parsed.filter((item: any) => {
+          if (!item || !item.id) return false;
+          const id = String(item.id);
+          if (id.startsWith('pat-') || id.startsWith('anu-') || id.startsWith('cup-') || ['1', '2', '3', '4', '5', '6', '7', '8'].includes(id)) {
+            return false;
+          }
+          return true;
+        });
+        return cleaned;
+      }
+    }
   } catch (e) {
     console.error('Error reading local demo data:', e);
   }
