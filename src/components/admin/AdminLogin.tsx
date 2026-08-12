@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { LOGO_DATA_URI } from '../../assets/logoDataUri';
 import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
 import { Card } from '../ui/Card';
@@ -96,10 +97,9 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({ onBackToPublic, onOpenCo
           <div className="text-center space-y-2">
             <div className="w-16 h-16 mx-auto rounded-3xl overflow-hidden shadow-lg shadow-amber-500/30 bg-amber-400 flex items-center justify-center p-1">
               <img
-                src="/noprecim_logo.jpg"
+                src={LOGO_DATA_URI}
                 alt="NOPRECIM Logo"
                 className="w-full h-full object-contain rounded-[20px]"
-                referrerPolicy="no-referrer"
               />
             </div>
             <div>

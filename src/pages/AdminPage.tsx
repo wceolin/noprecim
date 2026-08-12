@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { LOGO_DATA_URI } from '../assets/logoDataUri';
 import { useQuery } from '@tanstack/react-query';
 import { fetchAnuncios, fetchPatrocinadores, fetchCupons } from '../lib/supabase';
 import { AdminLogin } from '../components/admin/AdminLogin';
@@ -152,10 +153,9 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onBackToPublic }) => {
             <div className="flex items-center gap-2.5">
               <div className="w-9 h-9 rounded-2xl overflow-hidden shadow-md shrink-0 bg-amber-400 flex items-center justify-center p-0.5">
                 <img
-                  src="/noprecim_logo.jpg"
+                  src={LOGO_DATA_URI}
                   alt="NOPRECIM"
                   className="w-full h-full object-contain rounded-[12px]"
-                  referrerPolicy="no-referrer"
                 />
               </div>
               <div>

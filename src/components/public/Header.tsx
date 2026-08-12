@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../context/ToastContext';
+import { LOGO_DATA_URI } from '../../assets/logoDataUri';
 import {
   Search,
   Sun,
@@ -137,10 +138,9 @@ export const Header: React.FC<HeaderProps> = ({
             <a href="/" className="flex items-center gap-2 group">
               <div className="w-9 h-9 xs:w-10 xs:h-10 rounded-2xl overflow-hidden shadow-md shadow-amber-500/20 group-hover:scale-105 transition-transform bg-amber-400 flex items-center justify-center p-0.5">
                 <img
-                  src="/noprecim_logo.jpg"
+                  src={LOGO_DATA_URI}
                   alt="NOPRECIM Logo"
                   className="w-full h-full object-contain rounded-[12px] xs:rounded-[14px]"
-                  referrerPolicy="no-referrer"
                 />
               </div>
               <div>

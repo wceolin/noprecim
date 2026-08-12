@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { LOGO_DATA_URI } from '../../assets/logoDataUri';
 import { Flame, Heart, ShieldCheck, FileText } from 'lucide-react';
 import { LegalModal } from './LegalModal';
 
@@ -15,10 +16,9 @@ export const Footer: React.FC = () => {
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-2xl overflow-hidden shadow-md shadow-amber-500/20 shrink-0 bg-amber-400 flex items-center justify-center p-0.5">
                 <img
-                  src="/noprecim_logo.jpg"
+                  src={LOGO_DATA_URI}
                   alt="NOPRECIM Logo"
                   className="w-full h-full object-contain rounded-[14px]"
-                  referrerPolicy="no-referrer"
                 />
               </div>
               <div>
