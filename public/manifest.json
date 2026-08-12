@@ -1,0 +1,23 @@
+{
+  "short_name": "NOPRECIM",
+  "name": "NOPRECIM - Ofertas, Promoções e Cupons",
+  "icons": [
+    {
+      "src": "/src/assets/images/noprecim_exact_mascot_1786477126275.jpg",
+      "type": "image/jpeg",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/src/assets/images/noprecim_exact_mascot_1786477126275.jpg",
+      "type": "image/jpeg",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#ffffff",
+  "theme_color": "#ea580c",
+  "display": "standalone",
+  "orientation": "portrait",
+  "scope": "/",
+  "description": "NOPRECIM - O seu portal de achadinhos, ofertas e cupons no precinho!"
+}
