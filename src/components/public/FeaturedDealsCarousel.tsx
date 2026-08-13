@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Anuncio } from '../../types';
 import { AnuncioCard } from './AnuncioCard';
 import { Flame } from 'lucide-react';
@@ -12,6 +12,25 @@ export const FeaturedDealsCarousel: React.FC<FeaturedDealsCarouselProps> = ({
   featuredDeals,
   onSelectDeal
 }) => {
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const handleWheel = (e: WheelEvent) => {
+      if (e.deltaY !== 0) {
+        e.preventDefault();
+        container.scrollLeft += e.deltaY;
+      }
+    };
+
+    container.addEventListener('wheel', handleWheel, { passive: false });
+    return () => {
+      container.removeEventListener('wheel', handleWheel);
+    };
+  }, []);
+
   if (!featuredDeals || featuredDeals.length === 0) return null;
 
   return (
@@ -29,7 +48,7 @@ export const FeaturedDealsCarousel: React.FC<FeaturedDealsCarouselProps> = ({
       </div>
 
       {/* Horizontal Carousel Roll with exact same AnuncioCard styling */}
-      <div className="flex gap-4 overflow-x-auto no-scrollbar pb-3 pt-1 -mx-4 px-4 sm:mx-0 sm:px-0">
+      <div ref={scrollContainerRef} className="flex gap-4 overflow-x-auto no-scrollbar pb-3 pt-1 -mx-4 px-4 sm:mx-0 sm:px-0">
         {featuredDeals.map((deal, idx) => (
           <div key={deal.id} className="shrink-0 w-72 sm:w-80 flex flex-col">
             <AnuncioCard

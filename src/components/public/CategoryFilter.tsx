@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import {
   Sparkles,
   Laptop,
@@ -30,8 +30,27 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({
   selectedCategory,
   onSelectCategory
 }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const handleWheel = (e: WheelEvent) => {
+      if (e.deltaY !== 0) {
+        e.preventDefault();
+        container.scrollLeft += e.deltaY;
+      }
+    };
+
+    container.addEventListener('wheel', handleWheel, { passive: false });
+    return () => {
+      container.removeEventListener('wheel', handleWheel);
+    };
+  }, []);
+
   return (
-    <div className="w-full overflow-x-auto no-scrollbar py-2 my-2">
+    <div ref={containerRef} className="w-full overflow-x-auto no-scrollbar py-2 my-2">
       <div className="flex items-center gap-2 min-w-max px-1">
         {CATEGORIES.map((cat) => {
           const IconComponent = cat.icon;

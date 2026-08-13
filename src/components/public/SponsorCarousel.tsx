@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Patrocinador, Cupom } from '../../types';
 import { SignedImage } from '../ui/SignedImage';
 import { Modal } from '../ui/Modal';
@@ -15,6 +15,24 @@ export const SponsorCarousel: React.FC<SponsorCarouselProps> = ({ sponsors, cupo
   const [selectedSponsor, setSelectedSponsor] = useState<Patrocinador | null>(null);
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
   const { showToast } = useToast();
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const handleWheel = (e: WheelEvent) => {
+      if (e.deltaY !== 0) {
+        e.preventDefault();
+        container.scrollLeft += e.deltaY;
+      }
+    };
+
+    container.addEventListener('wheel', handleWheel, { passive: false });
+    return () => {
+      container.removeEventListener('wheel', handleWheel);
+    };
+  }, []);
 
   if (!sponsors || sponsors.length === 0) return null;
 
@@ -83,7 +101,7 @@ export const SponsorCarousel: React.FC<SponsorCarouselProps> = ({ sponsors, cupo
       </div>
 
       {/* Horizontal Scrollable Carousel Roll */}
-      <div className="flex gap-4 overflow-x-auto no-scrollbar pb-3 pt-1 -mx-4 px-4 sm:mx-0 sm:px-0">
+      <div ref={scrollContainerRef} className="flex gap-4 overflow-x-auto no-scrollbar pb-3 pt-1 -mx-4 px-4 sm:mx-0 sm:px-0">
         {sponsors.map((sponsor) => {
           const sponsorCoupons = getSponsorCoupons(sponsor.id);
           const couponCount = sponsorCoupons.length;
