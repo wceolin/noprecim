@@ -7,7 +7,8 @@ import {
   Sparkle,
   Shirt,
   BookOpen,
-  Wrench
+  Wrench,
+  Car
 } from 'lucide-react';
 
 export interface CategoryFilterProps {
@@ -24,6 +25,7 @@ const CATEGORIES = [
   { id: 'Moda', label: 'Moda', icon: Shirt },
   { id: 'Livros', label: 'Livros', icon: BookOpen },
   { id: 'Ferramentas', label: 'Ferramentas', icon: Wrench },
+  { id: 'Automotiva', label: 'Automotiva', icon: Car },
 ];
 
 export const CategoryFilter: React.FC<CategoryFilterProps> = ({

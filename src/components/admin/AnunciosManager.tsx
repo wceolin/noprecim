@@ -31,7 +31,7 @@ interface AnunciosManagerProps {
   onRefresh: () => void;
 }
 
-const CATEGORIES = ['Tecnologia', 'Casa', 'Saúde', 'Beleza', 'Moda', 'Livros', 'Ferramentas'];
+const CATEGORIES = ['Tecnologia', 'Casa', 'Saúde', 'Beleza', 'Moda', 'Livros', 'Ferramentas', 'Automotiva'];
 const SELOS = ['', 'Oferta', 'Mais vendido', 'Promoção', 'Novo'];
 
 export const AnunciosManager: React.FC<AnunciosManagerProps> = ({

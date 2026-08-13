@@ -7,6 +7,7 @@ export type CategoriaType =
   | 'Moda'
   | 'Livros'
   | 'Ferramentas'
+  | 'Automotiva'
   | string;
 
 export type SeloType = '' | 'Oferta' | 'Mais vendido' | 'Promoção' | 'Novo';
