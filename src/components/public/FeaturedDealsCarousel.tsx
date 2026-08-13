@@ -29,7 +29,7 @@ export const FeaturedDealsCarousel: React.FC<FeaturedDealsCarouselProps> = ({
     return () => {
       container.removeEventListener('wheel', handleWheel);
     };
-  }, []);
+  }, [featuredDeals]);
 
   if (!featuredDeals || featuredDeals.length === 0) return null;
 

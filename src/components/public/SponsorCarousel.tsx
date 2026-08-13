@@ -32,7 +32,7 @@ export const SponsorCarousel: React.FC<SponsorCarouselProps> = ({ sponsors, cupo
     return () => {
       container.removeEventListener('wheel', handleWheel);
     };
-  }, []);
+  }, [sponsors]);
 
   if (!sponsors || sponsors.length === 0) return null;
 
