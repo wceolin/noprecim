@@ -8,75 +8,94 @@ export interface CoverflowItemStyle {
 }
 
 /**
- * Hook para criar um efeito de carrossel "coverflow": o item mais próximo do
- * centro do container fica em tamanho normal e em primeiro plano, enquanto os
- * itens vizinhos ficam menores, mais transparentes, desfocados e "atrás" (z-index menor).
- *
- * Uso: aplique `containerRef` no elemento com overflow-x-auto + scroll-snap,
- * e `setItemRef(index)` em cada card. `styles[index]` retorna o estilo inline
- * a aplicar em cada card.
+ * Hook para criar um efeito de carrossel "coverflow" hiperfluido (60/120fps):
+ * O item no centro fica em tamanho normal e em primeiro plano, enquanto os
+ * itens laterais ficam suavemente menores, com opacidade e leve desfoque.
+ * 
+ * Utiliza atualização direta no DOM via requestAnimationFrame com aceleração GPU,
+ * garantindo resposta instantânea ao toque e rolagem contínua sem travamentos.
  */
 export function useCoverflow(count: number) {
   const containerRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const [styles, setStyles] = useState<CoverflowItemStyle[]>(
+  const [styles] = useState<CoverflowItemStyle[]>(() =>
     Array.from({ length: count }, () => ({
-      transform: 'scale(1)',
+      transform: 'scale3d(1, 1, 1)',
       opacity: 1,
       zIndex: 1,
       filter: 'none',
     }))
   );
 
-  const update = useCallback(() => {
+  const applyStylesDirectly = useCallback(() => {
     const container = containerRef.current;
     if (!container) return;
     const containerRect = container.getBoundingClientRect();
-    const centerX = containerRect.left + containerRect.width / 2;
+    const halfWidth = containerRect.width / 2;
+    if (!halfWidth) return;
+    const centerX = containerRect.left + halfWidth;
 
-    const newStyles = itemRefs.current.map((el) => {
-      if (!el) return { transform: 'scale(1)', opacity: 1, zIndex: 1, filter: 'none' };
+    const len = itemRefs.current.length;
+    for (let i = 0; i < len; i++) {
+      const el = itemRefs.current[i];
+      if (!el) continue;
       const rect = el.getBoundingClientRect();
       const itemCenter = rect.left + rect.width / 2;
       const distance = Math.abs(itemCenter - centerX);
-      const normalized = Math.min(distance / (containerRect.width / 2 || 1), 1);
+      const normalized = Math.min(distance / halfWidth, 1);
+
+      // Curva suave e natural de escala e opacidade
       const scale = 1 - normalized * 0.18;
-      const opacity = 1 - normalized * 0.25;
-      const blurPx = (normalized * 1.2).toFixed(1);
+      const opacity = Math.max(1 - normalized * 0.25, 0.72);
+      const blurPx = normalized > 0.2 ? (normalized * 1.2).toFixed(1) : '0';
       const zIndex = Math.round((1 - normalized) * 10);
-      return {
-        transform: `scale(${scale.toFixed(3)})`,
-        opacity: Math.max(opacity, 0.72),
-        filter: normalized > 0.2 ? `blur(${blurPx}px)` : 'none',
-        zIndex,
-      };
-    });
-    setStyles(newStyles);
+
+      // Atualização direta nas propriedades CSS aceleradas por GPU
+      el.style.transform = `scale3d(${scale.toFixed(4)}, ${scale.toFixed(4)}, 1)`;
+      el.style.opacity = `${opacity.toFixed(3)}`;
+      el.style.filter = normalized > 0.2 ? `blur(${blurPx}px)` : 'none';
+      el.style.zIndex = `${zIndex}`;
+    }
   }, []);
 
   useEffect(() => {
-    update();
+    applyStylesDirectly();
     const container = containerRef.current;
     if (!container) return;
 
-    let raf = 0;
-    const onScroll = () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(update);
+    let rafId = 0;
+    let isTicking = false;
+
+    const onScrollOrResize = () => {
+      if (!isTicking) {
+        isTicking = true;
+        rafId = requestAnimationFrame(() => {
+          applyStylesDirectly();
+          isTicking = false;
+        });
+      }
     };
 
-    container.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
+    container.addEventListener('scroll', onScrollOrResize, { passive: true });
+    window.addEventListener('resize', onScrollOrResize, { passive: true });
+
+    // Atualização pós-renderização para garantir sincronia inicial
+    const timeoutId = setTimeout(applyStylesDirectly, 60);
+
     return () => {
-      cancelAnimationFrame(raf);
-      container.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onScroll);
+      cancelAnimationFrame(rafId);
+      clearTimeout(timeoutId);
+      container.removeEventListener('scroll', onScrollOrResize);
+      window.removeEventListener('resize', onScrollOrResize);
     };
-  }, [update, count]);
+  }, [applyStylesDirectly, count]);
 
-  const setItemRef = useCallback((index: number) => (el: HTMLDivElement | null) => {
-    itemRefs.current[index] = el;
-  }, []);
+  const setItemRef = useCallback(
+    (index: number) => (el: HTMLDivElement | null) => {
+      itemRefs.current[index] = el;
+    },
+    []
+  );
 
-  return { containerRef, setItemRef, styles, recompute: update };
+  return { containerRef, setItemRef, styles, recompute: applyStylesDirectly };
 }

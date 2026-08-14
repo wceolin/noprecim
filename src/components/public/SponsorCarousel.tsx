@@ -161,17 +161,21 @@ export const SponsorCarousel: React.FC<SponsorCarouselProps> = ({ sponsors, cupo
         })}
       </div>
 
-      {/* Coverflow Carousel — MOBILE (card central em destaque, laterais menores atrás, rolagem infinita) */}
+      {/* Coverflow Carousel — MOBILE (card central em destaque, laterais menores atrás, rolagem hiperfluida com loop) */}
       <div
         ref={coverflow.containerRef}
-        className="sm:hidden isolate relative z-0 flex items-center overflow-x-auto no-scrollbar snap-x snap-mandatory py-3 -mx-4 px-4"
-        style={{ scrollPaddingLeft: '13%', scrollPaddingRight: '13%' }}
+        className="sm:hidden isolate relative z-0 flex items-center overflow-x-auto no-scrollbar snap-x snap-mandatory py-3 -mx-4 px-4 touch-pan-x overscroll-x-contain"
+        style={{
+          scrollPaddingLeft: '13%',
+          scrollPaddingRight: '13%',
+          WebkitOverflowScrolling: 'touch',
+        }}
       >
         {coverflow.extendedItems.map(({ extIndex, item: sponsor }) => {
           const sponsorCoupons = getSponsorCoupons(sponsor.id);
           const couponCount = sponsorCoupons.length;
           const style = coverflow.styles[extIndex] || {
-            transform: 'scale(1)',
+            transform: 'scale3d(1, 1, 1)',
             opacity: 1,
             zIndex: 1,
             filter: 'none',
@@ -187,8 +191,11 @@ export const SponsorCarousel: React.FC<SponsorCarouselProps> = ({ sponsors, cupo
                 opacity: style.opacity,
                 zIndex: style.zIndex,
                 filter: style.filter,
+                transformOrigin: 'center center',
+                willChange: 'transform, opacity, filter',
+                backfaceVisibility: 'hidden',
               }}
-              className="snap-center shrink-0 w-[76%] mx-[-3%] transition-all duration-150 ease-out cursor-pointer relative overflow-hidden rounded-[20px] bg-white dark:bg-zinc-900 border border-orange-100/90 dark:border-zinc-800 shadow-lg"
+              className="snap-center shrink-0 w-[76%] mx-[-3%] cursor-pointer relative overflow-hidden rounded-[20px] bg-white dark:bg-zinc-900 border border-orange-100/90 dark:border-zinc-800 shadow-lg"
             >
               {/* Banner Image */}
               <div className="h-24 w-full overflow-hidden relative bg-zinc-100 dark:bg-zinc-800">

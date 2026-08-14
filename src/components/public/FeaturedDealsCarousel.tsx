@@ -61,15 +61,19 @@ export const FeaturedDealsCarousel: React.FC<FeaturedDealsCarouselProps> = ({
         ))}
       </div>
 
-      {/* Coverflow Carousel — MOBILE (card central em destaque e maior, laterais menores, desfocados e atrás com loop infinito) */}
+      {/* Coverflow Carousel — MOBILE (card central em destaque e maior, laterais suaves, rolagem hiperfluida com loop) */}
       <div
         ref={coverflow.containerRef}
-        className="sm:hidden isolate relative z-0 flex items-center overflow-x-auto no-scrollbar snap-x snap-mandatory py-4 -mx-4 px-4"
-        style={{ scrollPaddingLeft: '14%', scrollPaddingRight: '14%' }}
+        className="sm:hidden isolate relative z-0 flex items-center overflow-x-auto no-scrollbar snap-x snap-mandatory py-4 -mx-4 px-4 touch-pan-x overscroll-x-contain"
+        style={{
+          scrollPaddingLeft: '14%',
+          scrollPaddingRight: '14%',
+          WebkitOverflowScrolling: 'touch',
+        }}
       >
         {coverflow.extendedItems.map(({ extIndex, realIndex, item: deal }) => {
           const style = coverflow.styles[extIndex] || {
-            transform: 'scale(1)',
+            transform: 'scale3d(1, 1, 1)',
             opacity: 1,
             zIndex: 1,
             filter: 'none',
@@ -83,8 +87,11 @@ export const FeaturedDealsCarousel: React.FC<FeaturedDealsCarouselProps> = ({
                 opacity: style.opacity,
                 zIndex: style.zIndex,
                 filter: style.filter,
+                transformOrigin: 'center center',
+                willChange: 'transform, opacity, filter',
+                backfaceVisibility: 'hidden',
               }}
-              className="snap-center shrink-0 w-[76%] mx-[-3.5%] transition-all duration-150 ease-out"
+              className="snap-center shrink-0 w-[76%] mx-[-3.5%]"
             >
               <AnuncioCard
                 anuncio={deal}
