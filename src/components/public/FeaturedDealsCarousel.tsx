@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { Anuncio } from '../../types';
 import { AnuncioCard } from './AnuncioCard';
+import { useInfiniteCoverflow } from '../../hooks/useInfiniteCoverflow';
 import { Flame } from 'lucide-react';
 
 interface FeaturedDealsCarouselProps {
@@ -13,6 +14,7 @@ export const FeaturedDealsCarousel: React.FC<FeaturedDealsCarouselProps> = ({
   onSelectDeal
 }) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const coverflow = useInfiniteCoverflow<Anuncio>(featuredDeals);
 
   useEffect(() => {
     const container = scrollContainerRef.current;
@@ -44,13 +46,12 @@ export const FeaturedDealsCarousel: React.FC<FeaturedDealsCarouselProps> = ({
             Anúncios em Destaque
           </h2>
         </div>
-        {/* Removed Super Ofertas Selecionadas span */}
       </div>
 
-      {/* Horizontal Carousel Roll with exact same AnuncioCard styling */}
-      <div ref={scrollContainerRef} className="flex gap-4 overflow-x-auto no-scrollbar pb-3 pt-1 -mx-4 px-4 sm:mx-0 sm:px-0">
+      {/* Horizontal Carousel Roll — DESKTOP (visual original, inalterado) */}
+      <div ref={scrollContainerRef} className="hidden sm:flex gap-4 overflow-x-auto no-scrollbar pb-3 pt-1">
         {featuredDeals.map((deal, idx) => (
-          <div key={deal.id} className="shrink-0 w-72 sm:w-80 flex flex-col">
+          <div key={deal.id} className="shrink-0 w-80 flex flex-col">
             <AnuncioCard
               anuncio={deal}
               onSelect={onSelectDeal}
@@ -59,7 +60,41 @@ export const FeaturedDealsCarousel: React.FC<FeaturedDealsCarouselProps> = ({
           </div>
         ))}
       </div>
+
+      {/* Coverflow Carousel — MOBILE (card central em destaque e maior, laterais menores, desfocados e atrás com loop infinito) */}
+      <div
+        ref={coverflow.containerRef}
+        className="sm:hidden isolate relative z-0 flex items-center overflow-x-auto no-scrollbar snap-x snap-mandatory py-4 -mx-4 px-4"
+        style={{ scrollPaddingLeft: '14%', scrollPaddingRight: '14%' }}
+      >
+        {coverflow.extendedItems.map(({ extIndex, realIndex, item: deal }) => {
+          const style = coverflow.styles[extIndex] || {
+            transform: 'scale(1)',
+            opacity: 1,
+            zIndex: 1,
+            filter: 'none',
+          };
+          return (
+            <div
+              key={`${deal.id}-${extIndex}`}
+              ref={coverflow.setItemRef(extIndex)}
+              style={{
+                transform: style.transform,
+                opacity: style.opacity,
+                zIndex: style.zIndex,
+                filter: style.filter,
+              }}
+              className="snap-center shrink-0 w-[76%] mx-[-3.5%] transition-all duration-150 ease-out"
+            >
+              <AnuncioCard
+                anuncio={deal}
+                onSelect={onSelectDeal}
+                index={realIndex}
+              />
+            </div>
+          );
+        })}
+      </div>
     </section>
   );
 };
-

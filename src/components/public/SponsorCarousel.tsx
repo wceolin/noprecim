@@ -4,6 +4,7 @@ import { SignedImage } from '../ui/SignedImage';
 import { Modal } from '../ui/Modal';
 import { useToast } from '../../context/ToastContext';
 import { registrarCliquePatrocinador } from '../../lib/supabase';
+import { useInfiniteCoverflow } from '../../hooks/useInfiniteCoverflow';
 import { Award, ExternalLink, Ticket, Copy, Check, Calendar, ArrowRight } from 'lucide-react';
 
 interface SponsorCarouselProps {
@@ -16,6 +17,7 @@ export const SponsorCarousel: React.FC<SponsorCarouselProps> = ({ sponsors, cupo
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
   const { showToast } = useToast();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const coverflow = useInfiniteCoverflow<Patrocinador>(sponsors);
 
   useEffect(() => {
     const container = scrollContainerRef.current;
@@ -100,8 +102,8 @@ export const SponsorCarousel: React.FC<SponsorCarouselProps> = ({ sponsors, cupo
         </div>
       </div>
 
-      {/* Horizontal Scrollable Carousel Roll */}
-      <div ref={scrollContainerRef} className="flex gap-4 overflow-x-auto no-scrollbar pb-3 pt-1 -mx-4 px-4 sm:mx-0 sm:px-0">
+      {/* Horizontal Scrollable Carousel Roll — DESKTOP (visual original, inalterado) */}
+      <div ref={scrollContainerRef} className="hidden sm:flex gap-4 overflow-x-auto no-scrollbar pb-3 pt-1">
         {sponsors.map((sponsor) => {
           const sponsorCoupons = getSponsorCoupons(sponsor.id);
           const couponCount = sponsorCoupons.length;
@@ -110,7 +112,7 @@ export const SponsorCarousel: React.FC<SponsorCarouselProps> = ({ sponsors, cupo
             <div
               key={sponsor.id}
               onClick={() => handleSponsorClick(sponsor)}
-              className="group cursor-pointer relative shrink-0 w-64 sm:w-72 overflow-hidden rounded-[22px] bg-white dark:bg-zinc-900 border border-orange-100/90 dark:border-zinc-800 shadow-sm hover:shadow-xl hover:border-orange-300 dark:hover:border-zinc-700 transition-all duration-300 transform hover:-translate-y-1"
+              className="group cursor-pointer relative shrink-0 w-72 overflow-hidden rounded-[22px] bg-white dark:bg-zinc-900 border border-orange-100/90 dark:border-zinc-800 shadow-sm hover:shadow-xl hover:border-orange-300 dark:hover:border-zinc-700 transition-all duration-300 transform hover:-translate-y-1"
             >
               {/* Banner Image */}
               <div className="h-28 w-full overflow-hidden relative bg-zinc-100 dark:bg-zinc-800">
@@ -152,6 +154,81 @@ export const SponsorCarousel: React.FC<SponsorCarouselProps> = ({ sponsors, cupo
 
                 <span className="inline-flex items-center gap-1 text-[11px] font-bold text-orange-600 dark:text-orange-400 shrink-0 group-hover:underline">
                   {couponCount > 0 ? 'Ver cupons' : 'Visitar'} <ArrowRight className="w-3 h-3" />
+                </span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Coverflow Carousel — MOBILE (card central em destaque, laterais menores atrás, rolagem infinita) */}
+      <div
+        ref={coverflow.containerRef}
+        className="sm:hidden isolate relative z-0 flex items-center overflow-x-auto no-scrollbar snap-x snap-mandatory py-3 -mx-4 px-4"
+        style={{ scrollPaddingLeft: '13%', scrollPaddingRight: '13%' }}
+      >
+        {coverflow.extendedItems.map(({ extIndex, item: sponsor }) => {
+          const sponsorCoupons = getSponsorCoupons(sponsor.id);
+          const couponCount = sponsorCoupons.length;
+          const style = coverflow.styles[extIndex] || {
+            transform: 'scale(1)',
+            opacity: 1,
+            zIndex: 1,
+            filter: 'none',
+          };
+
+          return (
+            <div
+              key={`${sponsor.id}-${extIndex}`}
+              ref={coverflow.setItemRef(extIndex)}
+              onClick={() => handleSponsorClick(sponsor)}
+              style={{
+                transform: style.transform,
+                opacity: style.opacity,
+                zIndex: style.zIndex,
+                filter: style.filter,
+              }}
+              className="snap-center shrink-0 w-[76%] mx-[-3%] transition-all duration-150 ease-out cursor-pointer relative overflow-hidden rounded-[20px] bg-white dark:bg-zinc-900 border border-orange-100/90 dark:border-zinc-800 shadow-lg"
+            >
+              {/* Banner Image */}
+              <div className="h-24 w-full overflow-hidden relative bg-zinc-100 dark:bg-zinc-800">
+                <SignedImage
+                  path={sponsor.imagem}
+                  alt={sponsor.nome}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/80 via-zinc-950/20 to-transparent" />
+
+                {couponCount > 0 && (
+                  <div className="absolute top-2 right-2 z-10 bg-rose-600 text-white font-black text-[10px] uppercase px-2.5 py-1 rounded-full shadow-lg flex items-center gap-1">
+                    <Ticket className="w-3 h-3" />
+                    <span>{couponCount} {couponCount === 1 ? 'cupom' : 'cupons'}</span>
+                  </div>
+                )}
+              </div>
+
+              {/* Logo & Info */}
+              <div className="p-3 flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <div className="w-9 h-9 rounded-xl overflow-hidden border-2 border-white dark:border-zinc-800 bg-white shadow-md shrink-0">
+                    <SignedImage
+                      path={sponsor.icone}
+                      alt={`${sponsor.nome} logo`}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="min-w-0">
+                    <h3 className="text-xs font-bold text-zinc-900 dark:text-zinc-100 truncate">
+                      {sponsor.nome}
+                    </h3>
+                    <p className="text-[10px] font-semibold text-zinc-400">
+                      {sponsor.cliques || 0} acessos
+                    </p>
+                  </div>
+                </div>
+
+                <span className="inline-flex items-center gap-1 text-[11px] font-bold text-orange-600 dark:text-orange-400 shrink-0">
+                  {couponCount > 0 ? 'Ver' : 'Visitar'} <ArrowRight className="w-3 h-3" />
                 </span>
               </div>
             </div>
